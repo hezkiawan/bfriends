@@ -4,14 +4,11 @@ type JsonNode = {
   text?: string;
 };
 
-const isValidNode = (node: any): node is JsonNode => {
-  return (
-    node &&
-    (node.type === "doc" ||
-      node.type === "paragraph" ||
-      node.type === "text" ||
-      node.type === undefined)
-  );
+const isValidNode = (node: unknown): node is JsonNode => {
+  if (typeof node !== "object" || node === null) return false;
+
+  const n = node as JsonNode;
+  return typeof n.type === "string" || n.type === undefined;
 };
 
 export function RenderToJson({ data }: { data: JsonNode }) {

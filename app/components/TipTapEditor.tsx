@@ -7,7 +7,7 @@ export function TipTapEditor({
   setJson,
   json,
 }: {
-  setJson: any;
+  setJson: (json: JSONContent) => void;
   json: JSONContent | null;
 }) {
   const editor = useEditor({
