@@ -10,10 +10,13 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { UserDropdown } from "./UserDropdown";
+import { getUserData } from "../lib/user";
+import SearchCommunity from "./SearchCommunity";
 
 export async function Navbar() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const userData = user ? await getUserData(user.id) : null;
 
   return (
     <nav className="h-[10vh] w-full flex items-center border-b px-5 lg:px-14 justify-between">
@@ -30,10 +33,15 @@ export async function Navbar() {
         />
       </Link>
 
+      <SearchCommunity />
+
       <div className="flex items-center gap-x-4">
         <ThemeToggle />
         {user ? (
-          <UserDropdown userImage={user.picture} />
+          <UserDropdown
+            userImage={user.picture}
+            userName={userData?.userName ?? ""}
+          />
         ) : (
           <div className="flex items-center gap-x-4">
             <Button variant={"secondary"} asChild>

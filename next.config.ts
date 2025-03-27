@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        hostname: "avatar.vercel.sh",
+        port: "",
+      },
+      {
+        hostname: "u3ttlknavg.ufs.sh",
+        port: "",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
