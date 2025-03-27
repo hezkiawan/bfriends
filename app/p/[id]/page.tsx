@@ -65,11 +65,14 @@ async function getData(name: string, searchParam: string) {
 }
 
 interface AppProps {
-  params: { id: string };
-  searchParams: { page: string };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ page: string }>;
 }
 
-export default async function SubpostRoute({ params, searchParams }: AppProps) {
+export default async function SubpostRoute(props: AppProps) {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+
   const { id } = params;
   const { page } = searchParams ?? { page: "1" };
   const { data, count } = await getData(id, page);
