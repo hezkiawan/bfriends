@@ -68,8 +68,14 @@ async function getData(id: string) {
   return data;
 }
 
-export default async function PostPage({ params }: { params: { id: string } }) {
-  const { id } = await params;
+interface AppProps {
+  params: Promise<{ id: string }>;
+}
+
+export default async function PostPage(props: AppProps) {
+  const params = await props.params;
+
+  const { id } = params;
   const data = await getData(id);
 
   return (
