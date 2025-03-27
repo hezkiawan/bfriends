@@ -71,9 +71,9 @@ export default async function SubpostRoute({
   params: { id: string };
   searchParams: { page: string };
 }) {
-  const { id } = await params;
-  const { page } = await searchParams;
-  const { data, count } = await getData(id, page);
+  const { id } = params;
+  const { page } = searchParams;
+  const { data, count } = await getData(id, page ?? "1");
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
