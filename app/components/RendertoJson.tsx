@@ -1,20 +1,36 @@
-export function RenderToJson({ data }: { data: any }) {
-  if (!data) return null;
+type JsonNode = {
+  type?: string;
+  content?: JsonNode[];
+  text?: string;
+};
 
-  const renderNode = (node: any, index: number) => {
-    if (!node) return null;
+const isValidNode = (node: any): node is JsonNode => {
+  return (
+    node &&
+    (node.type === "doc" ||
+      node.type === "paragraph" ||
+      node.type === "text" ||
+      node.type === undefined)
+  );
+};
+
+export function RenderToJson({ data }: { data: JsonNode }) {
+  if (!data || !isValidNode(data)) return null;
+
+  const renderNode = (node: JsonNode, index: number): JSX.Element | null => {
+    if (!node || !isValidNode(node)) return null;
 
     switch (node.type) {
       case "doc":
         return (
           <div key={index}>
-            {node.content?.map((child: any, i: number) => renderNode(child, i))}
+            {node.content?.map((child, i) => renderNode(child, i))}
           </div>
         );
       case "paragraph":
         return (
           <p key={index}>
-            {node.content?.map((child: any, i: number) => renderNode(child, i))}
+            {node.content?.map((child, i) => renderNode(child, i))}
           </p>
         );
       case "text":
