@@ -11,9 +11,10 @@ import Image from "next/image";
 import Link from "next/link";
 import pfp from "../../../public/pfp.png";
 import { Input } from "@/components/ui/input";
-import { useEffect } from "react";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getData(name: string, searchParam: string) {
+  noStore();
   const [count, data] = await prisma.$transaction([
     prisma.post.count({
       where: {
