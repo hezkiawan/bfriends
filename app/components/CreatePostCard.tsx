@@ -8,7 +8,7 @@ import { ImageDown, Link2 } from "lucide-react";
 
 export function CreatePostCard() {
   return (
-    <Card className="px-4 py-3 flex flex-row items-center gap-x-4">
+    <Card className="px-4 py-3 flex flex-row items-center gap-x-3">
       <Image src={pfp} alt="pfp" className="h-12 w-fit" />
 
       <Link href="/p/binus/create" className="w-full">

@@ -79,7 +79,7 @@ export default async function Home({
                 alt="Hello Image"
                 className="w-10 h-16 -mt-6"
               />
-              <h1 className="font-medium pl-3">Home</h1>
+              <h1 className="font-medium pl-2">Home</h1>
             </div>
             <p className="text-sm text-muted-foreground pt-2">
               Welcome to BFriends. Come here to check in with your favourite
