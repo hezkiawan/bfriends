@@ -18,7 +18,7 @@ export const ourFileRouter = {
     },
   })
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req: _req }) => {
+    .middleware(async () => {
       // Get user from Kinde
       const { getUser } = getKindeServerSession();
       const user = await getUser();

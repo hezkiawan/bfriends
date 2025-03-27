@@ -98,7 +98,7 @@ export default async function PostPage({ params }: { params: { id: string } }) {
             </form>
           </div>
 
-          <div className=" p-2 w-full">
+          <div className="p-2 w-full">
             <p className="text-xs text-muted-foreground">
               Posted by b/{data.User?.userName}
             </p>
@@ -114,7 +114,15 @@ export default async function PostPage({ params }: { params: { id: string } }) {
               />
             )}
 
-            {data.textContent && <RenderToJson data={data.textContent} />}
+            {data.textContent && (
+              <RenderToJson
+                data={
+                  typeof data.textContent === "string"
+                    ? JSON.parse(data.textContent)
+                    : data.textContent
+                }
+              />
+            )}
 
             <Separator className="my-5" />
 

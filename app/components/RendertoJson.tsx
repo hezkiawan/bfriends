@@ -25,6 +25,8 @@ export function RenderToJson({ data }: { data: any }) {
   };
 
   return (
-    <div className="px-2 prose dark:prose-invert">{renderNode(data, 0)}</div>
+    <div className="px-2 prose dark:prose-invert break-words">
+      {renderNode(data, 0)}
+    </div>
   );
 }
