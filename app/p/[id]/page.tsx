@@ -12,6 +12,7 @@ import Link from "next/link";
 import pfp from "../../../public/pfp.png";
 import { Input } from "@/components/ui/input";
 import { unstable_noStore as noStore } from "next/cache";
+import PageProps from "next";
 
 async function getData(name: string, searchParam: string) {
   noStore();
@@ -64,16 +65,15 @@ async function getData(name: string, searchParam: string) {
   return { data, count };
 }
 
-export default async function SubpostRoute({
-  params,
-  searchParams,
-}: {
+interface AppProps {
   params: { id: string };
   searchParams: { page: string };
-}) {
+}
+
+export default async function SubpostRoute({ params, searchParams }: AppProps) {
   const { id } = params;
-  const { page } = searchParams;
-  const { data, count } = await getData(id, page ?? "1");
+  const { page } = searchParams ?? { page: "1" };
+  const { data, count } = await getData(id, page);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
