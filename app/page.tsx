@@ -54,12 +54,14 @@ async function getData(searchParam: string) {
   return { data, count };
 }
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { page: string };
-}) {
-  const { page } = await searchParams;
+interface AppProps {
+  searchParams: Promise<{ page: string }>;
+}
+
+export default async function Home(props: AppProps) {
+  const searchParams = await props.searchParams;
+
+  const { page } = searchParams;
   return (
     <div className="max-w-[1000px] mx-auto flex gap-x-10 mt-4 mb-10">
       <div className="w-[65%] flex flex-col gap-y-5">
