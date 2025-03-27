@@ -7,7 +7,7 @@ import { Prisma, VoteType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { JSONContent } from "@tiptap/react";
 
-export async function updateUsername(prevState: any, formData: FormData) {
+export async function updateUsername(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -19,12 +19,8 @@ export async function updateUsername(prevState: any, formData: FormData) {
 
   try {
     await prisma.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        userName: username,
-      },
+      where: { id: user.id },
+      data: { userName: username },
     });
 
     revalidatePath("/");
@@ -34,21 +30,18 @@ export async function updateUsername(prevState: any, formData: FormData) {
       status: "green",
       newUsername: username,
     };
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        return {
-          message: "This username is already used",
-          status: "error",
-        };
-      }
+  } catch (_e: unknown) {
+    if (
+      _e instanceof Prisma.PrismaClientKnownRequestError &&
+      _e.code === "P2002"
+    ) {
+      return { message: "This username is already used", status: "error" };
     }
-
-    throw e;
+    throw _e;
   }
 }
 
-export async function createCommunity(prevState: any, formData: FormData) {
+export async function createCommunity(prevState: unknown, formData: FormData) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -59,33 +52,28 @@ export async function createCommunity(prevState: any, formData: FormData) {
   try {
     const name = formData.get("name") as string;
 
-    const data = await prisma.subpost.create({
-      data: {
-        name: name,
-        userId: user.id,
-      },
-      select: {
-        id: true,
-        name: true,
-      },
+    const { name: createdName } = await prisma.subpost.create({
+      data: { name, userId: user.id },
+      select: { name: true },
     });
 
     revalidatePath("/");
-    return redirect(`/p/${data.name}`);
-  } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      if (e.code === "P2002") {
-        return {
-          message: "This name is already used",
-          status: "error",
-        };
-      }
+    return redirect(`/p/${createdName}`);
+  } catch (_e: unknown) {
+    if (
+      _e instanceof Prisma.PrismaClientKnownRequestError &&
+      _e.code === "P2002"
+    ) {
+      return { message: "This name is already used", status: "error" };
     }
-    throw e;
+    throw _e;
   }
 }
 
-export async function updateSubDescription(prevState: any, formData: FormData) {
+export async function updateSubDescription(
+  prevState: unknown,
+  formData: FormData
+) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -98,23 +86,14 @@ export async function updateSubDescription(prevState: any, formData: FormData) {
     const description = formData.get("description") as string;
 
     await prisma.subpost.update({
-      where: {
-        name: subName,
-      },
-      data: {
-        description: description,
-      },
+      where: { name: subName },
+      data: { description },
     });
+
     revalidatePath(`/p/${subName}`);
-    return {
-      status: "green",
-      message: "Successfully updated the description",
-    };
-  } catch (e) {
-    return {
-      status: "error",
-      message: "Something went wrong",
-    };
+    return { status: "green", message: "Successfully updated the description" };
+  } catch {
+    return { status: "error", message: "Something went wrong" };
   }
 }
 
@@ -133,17 +112,18 @@ export async function createPost(
   const imageUrl = formData.get("imageUrl") as string | null;
   const subName = formData.get("subName") as string;
 
-  const data = await prisma.post.create({
+  const { id } = await prisma.post.create({
     data: {
-      title: title,
+      title,
       imageString: imageUrl ?? undefined,
-      subName: subName,
+      subName,
       userId: user.id,
       textContent: jsonContent ?? undefined,
     },
+    select: { id: true },
   });
 
-  redirect(`/post/${data.id}`);
+  redirect(`/post/${id}`);
 }
 
 export async function handleVote(formData: FormData) {
@@ -158,41 +138,25 @@ export async function handleVote(formData: FormData) {
   const voteDirection = formData.get("voteDirection") as VoteType;
 
   const vote = await prisma.vote.findFirst({
-    where: {
-      postId: postId,
-      userId: user.id,
-    },
+    where: { postId, userId: user.id },
   });
 
   if (vote) {
     if (vote.voteType === voteDirection) {
-      await prisma.vote.delete({
-        where: {
-          id: vote.id,
-        },
-      });
-
-      return revalidatePath("/");
+      await prisma.vote.delete({ where: { id: vote.id } });
     } else {
       await prisma.vote.update({
-        where: {
-          id: vote.id,
-        },
-        data: {
-          voteType: voteDirection,
-        },
+        where: { id: vote.id },
+        data: { voteType: voteDirection },
       });
-      return revalidatePath("/");
     }
+    return revalidatePath("/");
   }
 
   await prisma.vote.create({
-    data: {
-      voteType: voteDirection,
-      userId: user.id,
-      postId: postId,
-    },
+    data: { voteType: voteDirection, userId: user.id, postId },
   });
+
   return revalidatePath("/");
 }
 
@@ -207,12 +171,9 @@ export async function createComment(formData: FormData) {
   const comment = formData.get("comment") as string;
   const postId = formData.get("postId") as string;
 
-  const data = await prisma.comment.create({
-    data: {
-      text: comment,
-      userId: user.id,
-      postId: postId,
-    },
+  await prisma.comment.create({
+    data: { text: comment, userId: user.id, postId },
   });
+
   revalidatePath(`/post/${postId}`);
 }

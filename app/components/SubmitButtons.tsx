@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowUp, Loader2, Loader2Icon } from "lucide-react";
 import { useFormStatus } from "react-dom";
-import { refreshCommunities } from "./SearchCommunity";
 
 export function SubmitButton({ text }: { text: string }) {
   const { pending } = useFormStatus();

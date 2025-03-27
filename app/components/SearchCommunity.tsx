@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
@@ -20,11 +20,7 @@ const fetcher = async () => {
 };
 
 export default function SearchCommunity() {
-  // const { data: communities = [] } = useSWR("communities", fetcher, {
-  //   refreshInterval: 5000,
-  // });
-
-  const { data: communities = [], isValidating } = useSWR<Community[]>(
+  const { data: communities = [] } = useSWR<Community[]>(
     "communities",
     fetcher,
     {

@@ -1,16 +1,16 @@
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowDown, ArrowUp, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CopyLink } from "./CopyLink";
 import { handleVote } from "../actions";
 import { DownVote, UpVote } from "./SubmitButtons";
 import { RenderToJson } from "./RendertoJson";
+import { JSONContent } from "@tiptap/react";
 
 interface AppProps {
   title: string;
-  jsonContent: any;
+  jsonContent: unknown;
   id: string;
   subName: string;
   userName: string;
@@ -74,7 +74,7 @@ export function PostCard({
               className="w-full h-full"
             />
           ) : (
-            <RenderToJson data={jsonContent} />
+            <RenderToJson data={jsonContent as JSONContent} />
           )}
         </div>
 
