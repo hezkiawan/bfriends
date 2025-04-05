@@ -218,7 +218,7 @@ export async function updateProfilePicture(
       status: "green",
       newPicture: imageUrl,
     };
-  } catch (_e: unknown) {
+  } catch {
     return {
       message: "Failed to update profile picture",
       status: "error",
