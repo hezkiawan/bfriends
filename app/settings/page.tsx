@@ -12,6 +12,7 @@ async function getData(userId: string) {
     },
     select: {
       userName: true,
+      imageUrl: true,
     },
   });
 
@@ -30,7 +31,7 @@ export default async function SettingsPage() {
 
   return (
     <div className="max-w-[1000px] mx-auto flex flex-col mt-4">
-      <SettingsForm username={data?.userName} />
+      <SettingsForm username={data?.userName} imageUrl={data?.imageUrl} />
     </div>
   );
 }
