@@ -25,7 +25,7 @@ export async function GET() {
         email: user.email ?? "",
         firstName: user.given_name ?? "",
         lastName: user.family_name ?? "",
-        imageUrl: user.picture,
+        imageUrl: `${process.env.NEXT_PUBLIC_APP_URL}/default.png`,
         userName: generateUsername("", 3, 15),
       },
     });

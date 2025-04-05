@@ -177,3 +177,48 @@ export async function createComment(formData: FormData) {
 
   revalidatePath(`/post/${postId}`);
 }
+
+export async function updateProfilePicture(prevState: unknown, formData: FormData) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+
+  if (!user) {
+    return redirect("/api/auth/login");
+  }
+
+  try {
+    const picture = formData.get("profilePicture") as File;
+    
+    if (!picture || !picture.type.startsWith("image/")) {
+      return { 
+        message: "Please upload a valid image file", 
+        status: "error" 
+      };
+    }
+
+    // Convert the file to base64 string
+    const bytes = await picture.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const base64Image = buffer.toString('base64');
+    const imageUrl = `data:${picture.type};base64,${base64Image}`;
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { 
+        imageUrl
+      },
+    });
+
+    revalidatePath("/");
+    return {
+      message: "Profile picture updated successfully",
+      status: "green",
+      newPicture: imageUrl
+    };
+  } catch (error) {
+    return { 
+      message: "Failed to update profile picture", 
+      status: "error" 
+    };
+  }
+}

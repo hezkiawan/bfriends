@@ -12,6 +12,7 @@ export async function getUserData(userId: string) {
     },
     select: {
       userName: true,
+      imageUrl: true,
     },
   });
 

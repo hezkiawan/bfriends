@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   DropdownMenu,
@@ -18,7 +18,7 @@ interface AppProps {
 }
 
 export function UserDropdown({ userImage, userName }: AppProps) {
-  const defaultImage = "/pfp.png";
+  const defaultImage = "/default.png";
 
   return (
     <DropdownMenu>

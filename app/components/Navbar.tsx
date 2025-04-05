@@ -39,7 +39,7 @@ export async function Navbar() {
         <ThemeToggle />
         {user ? (
           <UserDropdown
-            userImage={user.picture}
+            userImage={userData?.imageUrl ?? null}
             userName={userData?.userName ?? ""}
           />
         ) : (

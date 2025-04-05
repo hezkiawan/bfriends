@@ -78,6 +78,8 @@ export default async function PostPage(props: AppProps) {
   const { id } = params;
   const data = await getData(id);
 
+  const defaultImage = "/default.png";
+
   return (
     <div className="max-w-[1200px] mx-auto flex gap-x-10 mt-4 mb-10">
       <div className="w-[70%] flex flex-col gap-y-5">
@@ -153,9 +155,7 @@ export default async function PostPage(props: AppProps) {
                   <div className="flex items-center gap-x-3">
                     <img
                       src={
-                        item.User?.imageUrl
-                          ? item.User.imageUrl
-                          : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Windows_10_Default_Profile_Picture.svg/2048px-Windows_10_Default_Profile_Picture.svg.png"
+                        item.User?.imageUrl ? item.User.imageUrl : defaultImage
                       }
                       alt="User image"
                       className="w-7 h-7 rounded-full"
