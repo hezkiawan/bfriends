@@ -178,7 +178,10 @@ export async function createComment(formData: FormData) {
   revalidatePath(`/post/${postId}`);
 }
 
-export async function updateProfilePicture(prevState: unknown, formData: FormData) {
+export async function updateProfilePicture(
+  prevState: unknown,
+  formData: FormData
+) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -188,24 +191,24 @@ export async function updateProfilePicture(prevState: unknown, formData: FormDat
 
   try {
     const picture = formData.get("profilePicture") as File;
-    
+
     if (!picture || !picture.type.startsWith("image/")) {
-      return { 
-        message: "Please upload a valid image file", 
-        status: "error" 
+      return {
+        message: "Please upload a valid image file",
+        status: "error",
       };
     }
 
     // Convert the file to base64 string
     const bytes = await picture.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const base64Image = buffer.toString('base64');
+    const base64Image = buffer.toString("base64");
     const imageUrl = `data:${picture.type};base64,${base64Image}`;
 
     await prisma.user.update({
       where: { id: user.id },
-      data: { 
-        imageUrl
+      data: {
+        imageUrl,
       },
     });
 
@@ -213,12 +216,12 @@ export async function updateProfilePicture(prevState: unknown, formData: FormDat
     return {
       message: "Profile picture updated successfully",
       status: "green",
-      newPicture: imageUrl
+      newPicture: imageUrl,
     };
-  } catch (error) {
-    return { 
-      message: "Failed to update profile picture", 
-      status: "error" 
+  } catch (_e: unknown) {
+    return {
+      message: "Failed to update profile picture",
+      status: "error",
     };
   }
 }
