@@ -1,4 +1,4 @@
-# 🧠 BFriends — Reddit-like Community Web App
+# 🧠 BFriends — Binusian's Community Web App
 
 [![Deploy](https://img.shields.io/badge/Live%20Demo-bfriends.vercel.app-0da37f?style=for-the-badge&logo=vercel)](https://bfriends.vercel.app)
 
