@@ -30,7 +30,7 @@ export default async function SettingsPage() {
   const data = await getData(user.id);
 
   return (
-    <div className="max-w-[1000px] mx-auto flex flex-col mt-4">
+    <div className="max-w-[1000px] mx-auto flex flex-col mt-4 px-4">
       <SettingsForm username={data?.userName} imageUrl={data?.imageUrl} />
     </div>
   );

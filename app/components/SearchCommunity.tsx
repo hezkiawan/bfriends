@@ -41,7 +41,7 @@ export default function SearchCommunity() {
       <Input
         type="text"
         placeholder="Search communities..."
-        className="w-full"
+        className="w-full "
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onClick={refreshCommunities}

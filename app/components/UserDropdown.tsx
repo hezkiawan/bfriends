@@ -26,7 +26,7 @@ export function UserDropdown({ userImage, userName }: AppProps) {
         <div className="rounded-xl border px-2 py-2 lg:px-4 lg:py-2 flex items-center gap-x-3 cursor-pointer">
           <MenuIcon className="w-6 h-6 lg:w-5 lg:h-5" />
 
-          <div className="relative h-8 w-8 hidden lg:block">
+          <div className="relative h-8 w-8 lg:block">
             <Image
               src={userImage || defaultImage}
               alt={`${userName}'s profile`}

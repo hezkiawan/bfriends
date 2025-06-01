@@ -33,7 +33,10 @@ export function SettingsForm({
   imageUrl: string | null | undefined;
 }) {
   const [state, formAction] = useActionState(updateUsername, initialState);
-  const [pictureState, pictureFormAction] = useActionState(updateProfilePicture, initialState);
+  const [pictureState, pictureFormAction] = useActionState(
+    updateProfilePicture,
+    initialState
+  );
   const [username, setUsername] = useState(initialUsername ?? "");
   const [imageUrl, setImageUrl] = useState(initialImageUrl ?? "");
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -78,6 +81,7 @@ export function SettingsForm({
 
   return (
     <div className="space-y-8">
+      {/* Username Form */}
       <form
         action={async (formData) => {
           const newUsername = formData.get("username") as string;
@@ -107,23 +111,25 @@ export function SettingsForm({
           <p className="text-red-400 mt-1">{state.message}</p>
         )}
 
-        <div className="w-full flex mt-5 gap-x-5 justify-end">
-          <Button variant="secondary" asChild>
+        {/* Buttons Responsive */}
+        <div className="w-full flex flex-col sm:flex-row mt-5 gap-3 sm:gap-x-5 justify-end">
+          <Button variant="secondary" asChild className="w-full sm:w-auto">
             <Link href="/">Cancel</Link>
           </Button>
           <SubmitButton text="Change Username" />
         </div>
       </form>
 
+      {/* Profile Picture Form */}
       <form action={pictureFormAction}>
         <Separator className="my-4" />
         <Label className="text-lg">Profile Picture</Label>
         <p className="text-muted-foreground">
-          You are able to change your profile picture here
+          You are able to change your profile picture here{" "}
         </p>
 
         <div className="mt-4 space-y-5">
-          <div className="relative w-32 h-32">
+          <div className="relative w-24 h-24 sm:w-32 sm:h-32">
             <Image
               src={previewUrl || imageUrl || "/default.png"}
               alt="Profile picture"
@@ -132,19 +138,28 @@ export function SettingsForm({
             />
           </div>
 
-          <div className="flex justify-between items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
             <Input
               type="file"
               accept="image/*"
               name="profilePicture"
               onChange={handleImageChange}
-              className="max-w-[250px]"
+              className="w-full lg:w-xs"
             />
+          </div>
+
+          <span className="text-muted-foreground italic">
+            File must be lower than 1MB
+          </span>
+
+          <div className="flex flex-col lg:flex-row lg:justify-end lg:relative lg:bottom-15">
             <SubmitButton text="Update Picture" />
           </div>
 
           {pictureState?.status === "error" && (
-            <p className="text-red-400 mt-1 text-center">{pictureState.message}</p>
+            <p className="text-red-400 mt-1 text-center">
+              {pictureState.message}
+            </p>
           )}
         </div>
       </form>
