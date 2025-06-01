@@ -30,13 +30,12 @@ This project focuses on building a scalable, full-stack application with real-wo
 
 ---
 
-## 🌐 Live Demo & Youtube Demo
+## 🌐 Live Demo & YouTube Demo
 
-👉 **[https://bfriends.vercel.app](https://bfriends.vercel.app)**
+🔗 **Live Website**: [bfriends.vercel.app](https://bfriends.vercel.app)  
+📺 **Video Demo**: [Watch on YouTube](https://youtu.be/kz3h8DgnMk4)
 
-👉 **[https://youtu.be/kz3h8DgnMk4]**
 ---
-
 ## 📄 License
 
 This project is for academic purposes and not intended for production use.
