@@ -33,6 +33,7 @@ This project focuses on building a scalable, full-stack application with real-wo
 ## 🌐 Live Demo & Youtube Demo
 
 👉 **[https://bfriends.vercel.app](https://bfriends.vercel.app)**
+
 👉 **[https://youtu.be/kz3h8DgnMk4]**
 ---
 
